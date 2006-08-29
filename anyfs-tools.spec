@@ -7,9 +7,11 @@ License:	GPL v2
 Group:		Applications
 Source0:	http://dl.sourceforge.net/anyfs-tools/%{name}-%{version}.tar.bz2
 # Source0-md5:	ba763fe3b1736dfeb82e39e27ebc2797
-URL:		-
-#BuildRequires:	-
-Requires:	xfstools
+URL:		http://anyfs-tools.sourceforge.net/
+BuildRequires:	bzip2-devel
+BuildRequires:	mjpegtools-devel1
+Requires:	e2fsprogs
+Requires:	xfsprogs
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -55,7 +57,7 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
-Header files for anyfs-toolslibrary.
+Header files for anyfs-tools library.
 
 %description devel -l pl
 Pliki nag³ówkowe biblioteki anyfs-tools.
