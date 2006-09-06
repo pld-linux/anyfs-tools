@@ -1,15 +1,15 @@
-Summary:	anyfs-tools provides a unix-like toolset for recovering and converting filesystems
-Summary(pl):	anyfs
+Summary:	anyfs-tools - a unix-like toolset for recovering and converting filesystems
+Summary(pl):	anyfs-tools - uniksowy zestaw narzêdzi do odzyskiwania i konwersji systemów plików
 Name:		anyfs-tools
 Version:	0.84.6
 Release:	0.1
 License:	GPL v2
-Group:		Applications
+Group:		Applications/System
 Source0:	http://dl.sourceforge.net/anyfs-tools/%{name}-%{version}.tar.bz2
 # Source0-md5:	ba763fe3b1736dfeb82e39e27ebc2797
 URL:		http://anyfs-tools.sourceforge.net/
 BuildRequires:	bzip2-devel
-BuildRequires:	mjpegtools-devel1
+BuildRequires:	mjpegtools-devel
 Requires:	e2fsprogs
 Requires:	xfsprogs
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -18,7 +18,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 anyfs-tools provides a unix-like toolset for recovering and converting
 filesystems. The following utils are included in the toolset:
 
-build_it uses LINUX OS filesystem drivers to recursively read
+build_it uses Linux OS filesystem drivers to recursively read
 directory entries in order to obtain information about all of the
 filesystem inodes. The information is then saved to an external inode
 table.
@@ -50,17 +50,56 @@ and changing file access permissions. All changes are applied to the
 external inode table on unmounting the filesystem, leaving the data on
 the block device unchanged.
 
+%description -l pl
+anyfs-tools dostarczaj± dzia³aj±cego w uniksowym stylu zestawu
+narzêdzi do odzyskiwania i konwersji systemów plików. W pakiecie
+zawarte s± nastêpuj±ce narzêdzia:
+
+build_it wykorzystuje linuksowe sterowniki systemów plików do
+rekurencyjnego odczytu wpisów katalogów w celu uzyskania informacji o
+wszystkich i-wêz³ach systemu plików. Informacje te s± nastêpnie
+zapisywane do zewnêtrznej tabeli i-wêz³ów.
+
+anysurrect przeszukuje urz±dzenia blokowe pod k±tem okre¶lonych
+rodzajów plików w oparciu o ich strukturê plików. Inforamcje o ka¿dym
+znalezionym rodzaju pliku s± tak¿e zapisywane do zewnêtrznej tabeli
+i-wêz³ów.
+
+reblock zmienia rozmiar bloku systemu plików. Wykorzystuje informacje
+o tabeli i-wêz³ów systemu plików, aby zmieniæ rozmieszczenie
+fragmentów ka¿dego pliku w taki sposób, by by³y wyrównane do granic
+bloków przy nowym ich rozmiarze.
+
+build_e2fs na podstawie zewnêtrznej informacji o tabeli i-wêz³ów
+przystêpuje do tworzenia systemu plików ext2fs na urz±dzeniu.
+
+build_xfs na podstawie zewnêtrznej informacji o tabeli i-wêz³ów
+przystêpuje do tworzenia systemu plików xfs na urz±dzeniu.
+
+anyconvertfs konwertuje system plików stosuj±c inne narzêdzia
+anyfs-tools.
+
+Sterownik systemu plików anyfs dla Linuksa pozwala u¿ytkownikowi
+podmontowaæ urz±dzenie przy u¿yciu zewnêtrznych informacji o tabeli
+i-wêz³ów stworzonej przy u¿yciu polecenia build_it lub anysurrect. Po
+podmontowaniu systemu plików u¿ytkownik mo¿e wykonywaæ operacje na
+plikach, takie jak usuwanie, przenoszenie, tworzenie dowi±zañ
+symbolicznych i zwyk³ych czy urz±dzeñ specjalnych oraz zmiana
+uprawnieñ do plików. Wszystkie zmiany s± wykonywane na zewnêtrznej
+tabeli i-wêz³ów przy odmontowywaniu systemu plików, bez zmiany danych
+na urz±dzeniu blokowym.
+
 %package devel
-Summary:	Header files for anyfs-tools library
-Summary(pl):	Pliki nag³ówkowe biblioteki anyfs-tools
+Summary:	Header files for anyfs-tools
+Summary(pl):	Pliki nag³ówkowe anyfs-tools
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
-Header files for anyfs-tools library.
+Header files for anyfs-tools.
 
 %description devel -l pl
-Pliki nag³ówkowe biblioteki anyfs-tools.
+Pliki nag³ówkowe anyfs-tools.
 
 %prep
 %setup -q
@@ -82,15 +121,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc README THANKS README.ru
+%doc README THANKS
+%lang(ru) %doc README.ru
 %attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man3/*
 %{_mandir}/man5/*
 %{_mandir}/man8/*
-%{_mandir}/ru/man3/*
-%{_mandir}/ru/man3/*
-%{_mandir}/ru/man5/*
+%lang(ru) %{_mandir}/ru/man3/*
+%lang(ru) %{_mandir}/ru/man3/*
+%lang(ru) %{_mandir}/ru/man5/*
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/anyfs-tools/*
+%{_includedir}/anyfs-tools
