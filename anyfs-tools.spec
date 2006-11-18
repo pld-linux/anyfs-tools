@@ -6,7 +6,7 @@ Release:	0.1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/anyfs-tools/%{name}-%{version}.tar.bz2
-# Source0-md5:	00b43bf8448a2dfc976fbd0b2da9d6d1
+# Source0-md5:	67c185ae7957ba95427aecef4ff7e0ee
 URL:		http://anyfs-tools.sourceforge.net/
 BuildRequires:	bzip2-devel
 BuildRequires:	e2fsprogs-devel >= 1.38
