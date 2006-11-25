@@ -1,12 +1,12 @@
 Summary:	anyfs-tools - a unix-like toolset for recovering and converting filesystems
 Summary(pl):	anyfs-tools - uniksowy zestaw narzêdzi do odzyskiwania i konwersji systemów plików
 Name:		anyfs-tools
-Version:	0.84.9
+Version:	0.84.9a
 Release:	0.1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/anyfs-tools/%{name}-%{version}.tar.bz2
-# Source0-md5:	27d74d895f630b8f3f74d6f58e16c7a5
+# Source0-md5:	bc6a9429d9069362403517909cd79dc4
 URL:		http://anyfs-tools.sourceforge.net/
 BuildRequires:	bzip2-devel
 BuildRequires:	e2fsprogs-devel >= 1.38
