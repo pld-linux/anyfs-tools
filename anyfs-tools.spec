@@ -1,5 +1,5 @@
 Summary:	anyfs-tools - a unix-like toolset for recovering and converting filesystems
-Summary(pl.UTF-8):   anyfs-tools - uniksowy zestaw narzędzi do odzyskiwania i konwersji systemów plików
+Summary(pl.UTF-8):	anyfs-tools - uniksowy zestaw narzędzi do odzyskiwania i konwersji systemów plików
 Name:		anyfs-tools
 Version:	0.84.9a
 Release:	0.1
@@ -91,7 +91,7 @@ na urządzeniu blokowym.
 
 %package devel
 Summary:	Header files for anyfs-tools
-Summary(pl.UTF-8):   Pliki nagłówkowe anyfs-tools
+Summary(pl.UTF-8):	Pliki nagłówkowe anyfs-tools
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
