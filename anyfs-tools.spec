@@ -1,5 +1,5 @@
 Summary:	anyfs-tools - a unix-like toolset for recovering and converting filesystems
-Summary(pl):	anyfs-tools - uniksowy zestaw narzêdzi do odzyskiwania i konwersji systemów plików
+Summary(pl.UTF-8):   anyfs-tools - uniksowy zestaw narzÄ™dzi do odzyskiwania i konwersji systemÃ³w plikÃ³w
 Name:		anyfs-tools
 Version:	0.84.9a
 Release:	0.1
@@ -50,56 +50,56 @@ and changing file access permissions. All changes are applied to the
 external inode table on unmounting the filesystem, leaving the data on
 the block device unchanged.
 
-%description -l pl
-anyfs-tools dostarczaj± dzia³aj±cego w uniksowym stylu zestawu
-narzêdzi do odzyskiwania i konwersji systemów plików. W pakiecie
-zawarte s± nastêpuj±ce narzêdzia:
+%description -l pl.UTF-8
+anyfs-tools dostarczajÄ… dziaÅ‚ajÄ…cego w uniksowym stylu zestawu
+narzÄ™dzi do odzyskiwania i konwersji systemÃ³w plikÃ³w. W pakiecie
+zawarte sÄ… nastÄ™pujÄ…ce narzÄ™dzia:
 
-build_it wykorzystuje linuksowe sterowniki systemów plików do
-rekurencyjnego odczytu wpisów katalogów w celu uzyskania informacji o
-wszystkich i-wêz³ach systemu plików. Informacje te s± nastêpnie
-zapisywane do zewnêtrznej tabeli i-wêz³ów.
+build_it wykorzystuje linuksowe sterowniki systemÃ³w plikÃ³w do
+rekurencyjnego odczytu wpisÃ³w katalogÃ³w w celu uzyskania informacji o
+wszystkich i-wÄ™zÅ‚ach systemu plikÃ³w. Informacje te sÄ… nastÄ™pnie
+zapisywane do zewnÄ™trznej tabeli i-wÄ™zÅ‚Ã³w.
 
-anysurrect przeszukuje urz±dzenia blokowe pod k±tem okre¶lonych
-rodzajów plików w oparciu o ich strukturê plików. Inforamcje o ka¿dym
-znalezionym rodzaju pliku s± tak¿e zapisywane do zewnêtrznej tabeli
-i-wêz³ów.
+anysurrect przeszukuje urzÄ…dzenia blokowe pod kÄ…tem okreÅ›lonych
+rodzajÃ³w plikÃ³w w oparciu o ich strukturÄ™ plikÃ³w. Inforamcje o kaÅ¼dym
+znalezionym rodzaju pliku sÄ… takÅ¼e zapisywane do zewnÄ™trznej tabeli
+i-wÄ™zÅ‚Ã³w.
 
-reblock zmienia rozmiar bloku systemu plików. Wykorzystuje informacje
-o tabeli i-wêz³ów systemu plików, aby zmieniæ rozmieszczenie
-fragmentów ka¿dego pliku w taki sposób, by by³y wyrównane do granic
-bloków przy nowym ich rozmiarze.
+reblock zmienia rozmiar bloku systemu plikÃ³w. Wykorzystuje informacje
+o tabeli i-wÄ™zÅ‚Ã³w systemu plikÃ³w, aby zmieniÄ‡ rozmieszczenie
+fragmentÃ³w kaÅ¼dego pliku w taki sposÃ³b, by byÅ‚y wyrÃ³wnane do granic
+blokÃ³w przy nowym ich rozmiarze.
 
-build_e2fs na podstawie zewnêtrznej informacji o tabeli i-wêz³ów
-przystêpuje do tworzenia systemu plików ext2fs na urz±dzeniu.
+build_e2fs na podstawie zewnÄ™trznej informacji o tabeli i-wÄ™zÅ‚Ã³w
+przystÄ™puje do tworzenia systemu plikÃ³w ext2fs na urzÄ…dzeniu.
 
-build_xfs na podstawie zewnêtrznej informacji o tabeli i-wêz³ów
-przystêpuje do tworzenia systemu plików xfs na urz±dzeniu.
+build_xfs na podstawie zewnÄ™trznej informacji o tabeli i-wÄ™zÅ‚Ã³w
+przystÄ™puje do tworzenia systemu plikÃ³w xfs na urzÄ…dzeniu.
 
-anyconvertfs konwertuje system plików stosuj±c inne narzêdzia
+anyconvertfs konwertuje system plikÃ³w stosujÄ…c inne narzÄ™dzia
 anyfs-tools.
 
-Sterownik systemu plików anyfs dla Linuksa pozwala u¿ytkownikowi
-podmontowaæ urz±dzenie przy u¿yciu zewnêtrznych informacji o tabeli
-i-wêz³ów stworzonej przy u¿yciu polecenia build_it lub anysurrect. Po
-podmontowaniu systemu plików u¿ytkownik mo¿e wykonywaæ operacje na
-plikach, takie jak usuwanie, przenoszenie, tworzenie dowi±zañ
-symbolicznych i zwyk³ych czy urz±dzeñ specjalnych oraz zmiana
-uprawnieñ do plików. Wszystkie zmiany s± wykonywane na zewnêtrznej
-tabeli i-wêz³ów przy odmontowywaniu systemu plików, bez zmiany danych
-na urz±dzeniu blokowym.
+Sterownik systemu plikÃ³w anyfs dla Linuksa pozwala uÅ¼ytkownikowi
+podmontowaÄ‡ urzÄ…dzenie przy uÅ¼yciu zewnÄ™trznych informacji o tabeli
+i-wÄ™zÅ‚Ã³w stworzonej przy uÅ¼yciu polecenia build_it lub anysurrect. Po
+podmontowaniu systemu plikÃ³w uÅ¼ytkownik moÅ¼e wykonywaÄ‡ operacje na
+plikach, takie jak usuwanie, przenoszenie, tworzenie dowiÄ…zaÅ„
+symbolicznych i zwykÅ‚ych czy urzÄ…dzeÅ„ specjalnych oraz zmiana
+uprawnieÅ„ do plikÃ³w. Wszystkie zmiany sÄ… wykonywane na zewnÄ™trznej
+tabeli i-wÄ™zÅ‚Ã³w przy odmontowywaniu systemu plikÃ³w, bez zmiany danych
+na urzÄ…dzeniu blokowym.
 
 %package devel
 Summary:	Header files for anyfs-tools
-Summary(pl):	Pliki nag³ówkowe anyfs-tools
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe anyfs-tools
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files for anyfs-tools.
 
-%description devel -l pl
-Pliki nag³ówkowe anyfs-tools.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe anyfs-tools.
 
 %prep
 %setup -q
