@@ -9,6 +9,7 @@ Source0:	http://dl.sourceforge.net/anyfs-tools/%{name}-%{version}.tar.bz2
 # Source0-md5:	c5d13e636b0097386f5aebf4c445d627
 URL:		http://anyfs-tools.sourceforge.net/
 BuildRequires:	e2fsprogs-devel >= 1.38
+BuildRequires:	libfuse-devel
 BuildRequires:	mjpegtools-devel
 BuildRequires:	mpeg2dec-devel
 BuildRequires:	xfsprogs-devel
