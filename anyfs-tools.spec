@@ -167,6 +167,12 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post -n kernel%{_alt_kernel}-misc-any
+%depmod %{_kernel_ver}
+
+%postun -n kernel%{_alt_kernel}-misc-any
+%depmod %{_kernel_ver}
+
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc README THANKS
