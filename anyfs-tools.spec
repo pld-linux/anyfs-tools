@@ -10,7 +10,7 @@ Source0:	http://dl.sourceforge.net/anyfs-tools/%{name}-%{version}.tar.bz2
 URL:		http://anyfs-tools.sourceforge.net/
 BuildRequires:	e2fsprogs-devel >= 1.38
 BuildRequires:	mjpegtools-devel
-Requires:	xfsprogs
+BuildRequires:	xfsprogs-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
