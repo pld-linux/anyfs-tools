@@ -16,6 +16,7 @@ Group:		Applications/System
 Source0:	http://dl.sourceforge.net/anyfs-tools/%{name}-%{version}.tar.bz2
 # Source0-md5:	c5d13e636b0097386f5aebf4c445d627
 Patch0:		%{name}-DFL_RTEXTSIZE.patch
+Patch1:		%{name}-blksize.patch
 URL:		http://anyfs-tools.sourceforge.net/
 BuildRequires:	e2fsprogs-devel >= 1.38
 %if %{with kernel}
@@ -136,6 +137,7 @@ Pliki nagłówkowe anyfs-tools.
 %prep
 %setup -q
 %patch0 -p0
+%patch1 -p0
 cat > anyfs/Makefile <<'EOF'
 obj-m += any.o
 any-objs := inode.o file.o dir.o namei.o symlink.o
@@ -145,6 +147,7 @@ EOF
 %configure
 %{__make} libany
 %{__make} progs
+
 %if %{with kernel}
 %build_kernel_modules -C anyfs -m any
 %endif
@@ -181,7 +184,8 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with kernel}
 %files -n kernel%{_alt_kernel}-misc-any
 %defattr(644,root,root,755)
-/lib/modules/%{_kernel_ver}/kernel/fs/any.ko*
+/etc/modprobe.d/%{_kernel_ver}/any.conf
+/lib/modules/%{_kernel_ver}/kernel/fs/any-current.ko*
 %endif
 
 %files devel
