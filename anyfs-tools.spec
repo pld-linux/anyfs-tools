@@ -156,7 +156,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 %if %{with kernel}
-%install_kernel_modules -m anyfs/any -d kernel/misc -n any -s current
+%install_kernel_modules -m anyfs/any -d kernel/fs -n any -s current
 %endif
 
 %find_lang %{name}
