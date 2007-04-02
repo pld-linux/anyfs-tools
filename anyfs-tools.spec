@@ -26,7 +26,7 @@ BuildRequires:	rpmbuild(macros) >= 1.379
 BuildRequires:	libfuse-devel >= 2.5
 BuildRequires:	mjpegtools-devel
 BuildRequires:	mpeg2dec-devel
-BuildRequires:	xfsprogs-devel
+BuildRequires:	xfsprogs-devel >= 2.8.11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
