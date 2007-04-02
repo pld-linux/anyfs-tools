@@ -3,6 +3,9 @@
 # - fix make anyfs_module
 # - make subpackage for libany.a ( -libany or just -static)
 
+%bcond_without	dist_kernel	# allow non-distribution kernel
+%bcond_without	kernel		# don't build 'any' kernel module
+
 Summary:	anyfs-tools - a unix-like toolset for recovering and converting filesystems
 Summary(pl.UTF-8):	anyfs-tools - uniksowy zestaw narzędzi do odzyskiwania i konwersji systemów plików
 Name:		anyfs-tools
@@ -15,6 +18,10 @@ Source0:	http://dl.sourceforge.net/anyfs-tools/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-DFL_RTEXTSIZE.patch
 URL:		http://anyfs-tools.sourceforge.net/
 BuildRequires:	e2fsprogs-devel >= 1.38
+%if %{with kernel}
+%{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.9}
+BuildRequires:	rpmbuild(macros) >= 1.379
+%endif
 BuildRequires:	libfuse-devel >= 2.5
 BuildRequires:	mjpegtools-devel
 BuildRequires:	mpeg2dec-devel
@@ -96,6 +103,24 @@ uprawnień do plików. Wszystkie zmiany są wykonywane na zewnętrznej
 tabeli i-węzłów przy odmontowywaniu systemu plików, bez zmiany danych
 na urządzeniu blokowym.
 
+%package -n kernel%{_alt_kernel}-misc-any
+Summary:        AnyFS kernel module
+Summary(pl.UTF-8):      Modul AnyFS
+Release:        %{_rel}@%{_kernel_ver_str}
+License:        GPL v2
+Group:          Base/Kernel
+Requires(post,postun):  /sbin/depmod
+%if %{with dist_kernel}
+%requires_releq_kernel
+Requires(postun):       %releq_kernel
+%endif
+%if "%{_alt_kernel}" != "%{nil}"
+Provides:       kernel-misc-any
+%endif
+
+%description -n kernel%{_alt_kernel}-misc-any
+This package contains the AnyFS kernel module.
+
 %package devel
 Summary:	Header files for anyfs-tools
 Summary(pl.UTF-8):	Pliki nagłówkowe anyfs-tools
@@ -111,17 +136,28 @@ Pliki nagłówkowe anyfs-tools.
 %prep
 %setup -q
 %patch0 -p0
+cat > anyfs/Makefile <<'EOF'
+obj-m += any.o
+any-objs := inode.o file.o dir.o namei.o symlink.o
+EOF
 
 %build
 %configure
 %{__make} libany
 %{__make} progs
+%if %{with kernel}
+%build_kernel_modules -C anyfs -m any
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%if %{with kernel}
+%install_kernel_modules -m anyfs/any -d kernel/misc -n any -s current
+%endif
 
 %find_lang %{name}
 
@@ -141,6 +177,12 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ru) %{_mandir}/ru/man3/*
 %lang(ru) %{_mandir}/ru/man5/*
 %lang(ru) %{_mandir}/ru/man8/*
+
+%if %{with kernel}
+%files -n kernel%{_alt_kernel}-misc-any
+%defattr(644,root,root,755)
+/lib/modules/%{_kernel_ver}/kernel/fs/any.ko*
+%endif
 
 %files devel
 %defattr(644,root,root,755)
