@@ -1,3 +1,8 @@
+#
+# TODO:
+# - fix make anyfs_module
+# - make subpackage for libany.a ( -libany or just -static)
+
 Summary:	anyfs-tools - a unix-like toolset for recovering and converting filesystems
 Summary(pl.UTF-8):	anyfs-tools - uniksowy zestaw narzędzi do odzyskiwania i konwersji systemów plików
 Name:		anyfs-tools
@@ -7,9 +12,10 @@ License:	GPL v2
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/anyfs-tools/%{name}-%{version}.tar.bz2
 # Source0-md5:	c5d13e636b0097386f5aebf4c445d627
+Patch0:		%{name}-DFL_RTEXTSIZE.patch
 URL:		http://anyfs-tools.sourceforge.net/
 BuildRequires:	e2fsprogs-devel >= 1.38
-BuildRequires:	libfuse-devel
+BuildRequires:	libfuse-devel >= 2.5
 BuildRequires:	mjpegtools-devel
 BuildRequires:	mpeg2dec-devel
 BuildRequires:	xfsprogs-devel
@@ -104,10 +110,12 @@ Pliki nagłówkowe anyfs-tools.
 
 %prep
 %setup -q
+%patch0 -p0
 
 %build
 %configure
-%{__make}
+%{__make} libany
+%{__make} progs
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -125,12 +133,14 @@ rm -rf $RPM_BUILD_ROOT
 %doc README THANKS
 %lang(ru) %doc README.ru
 %attr(755,root,root) %{_sbindir}/*
+%attr(755,root,root) %{_bindir}/anyfuse
 %{_mandir}/man3/*
 %{_mandir}/man5/*
 %{_mandir}/man8/*
 %lang(ru) %{_mandir}/ru/man3/*
 %lang(ru) %{_mandir}/ru/man3/*
 %lang(ru) %{_mandir}/ru/man5/*
+%lang(ru) %{_mandir}/ru/man8/*
 
 %files devel
 %defattr(644,root,root,755)
