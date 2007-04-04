@@ -3,9 +3,12 @@
 # - fix make anyfs_module
 # - make subpackage for libany.a ( -libany or just -static)
 
+#
+# Conditional build:
 %bcond_without	dist_kernel	# allow non-distribution kernel
 %bcond_without	kernel		# don't build 'any' kernel module
-
+%bcond_without	userspace	# don't build userspace utilities
+#
 Summary:	anyfs-tools - a unix-like toolset for recovering and converting filesystems
 Summary(pl.UTF-8):	anyfs-tools - uniksowy zestaw narzędzi do odzyskiwania i konwersji systemów plików
 Name:		anyfs-tools
@@ -104,9 +107,21 @@ uprawnień do plików. Wszystkie zmiany są wykonywane na zewnętrznej
 tabeli i-węzłów przy odmontowywaniu systemu plików, bez zmiany danych
 na urządzeniu blokowym.
 
+%package devel
+Summary:	Header files for anyfs-tools
+Summary(pl.UTF-8):	Pliki nagłówkowe anyfs-tools
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description devel
+Header files for anyfs-tools.
+
+%description devel -l pl.UTF-8
+Pliki nagłówkowe anyfs-tools.
+
 %package -n kernel%{_alt_kernel}-misc-any
-Summary:        AnyFS kernel module
-Summary(pl.UTF-8):      Modul AnyFS
+Summary:        AnyFS Linux kernel module
+Summary(pl.UTF-8):      Moduł jądra Linuksa AnyFS
 Release:        %{_rel}@%{_kernel_ver_str}
 License:        GPL v2
 Group:          Base/Kernel
@@ -120,33 +135,29 @@ Provides:       kernel-misc-any
 %endif
 
 %description -n kernel%{_alt_kernel}-misc-any
-This package contains the AnyFS kernel module.
+This package contains the AnyFS Linux kernel module.
 
-%package devel
-Summary:	Header files for anyfs-tools
-Summary(pl.UTF-8):	Pliki nagłówkowe anyfs-tools
-Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description devel
-Header files for anyfs-tools.
-
-%description devel -l pl.UTF-8
-Pliki nagłówkowe anyfs-tools.
+%description -n kernel%{_alt_kernel}-misc-any -l pl.UTF-8
+Ten pakiet zawiera moduł jądra Linuksa AnyFS.
 
 %prep
 %setup -q
 %patch0 -p0
 %patch1 -p0
+
+%if %{with kernel}
 cat > anyfs/Makefile <<'EOF'
 obj-m += any.o
 any-objs := inode.o file.o dir.o namei.o symlink.o
 EOF
+%endif
 
 %build
+%if %{with userspace}
 %configure
 %{__make} libany
 %{__make} progs
+%endif
 
 %if %{with kernel}
 %build_kernel_modules -C anyfs -m any
@@ -155,8 +166,10 @@ EOF
 %install
 rm -rf $RPM_BUILD_ROOT
 
+%if %{with userspace}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+%endif
 
 %if %{with kernel}
 %install_kernel_modules -m anyfs/any -d kernel/fs -n any -s current
@@ -173,6 +186,7 @@ rm -rf $RPM_BUILD_ROOT
 %postun -n kernel%{_alt_kernel}-misc-any
 %depmod %{_kernel_ver}
 
+%if %{with userspace}
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc README THANKS
@@ -183,9 +197,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man5/*
 %{_mandir}/man8/*
 %lang(ru) %{_mandir}/ru/man3/*
-%lang(ru) %{_mandir}/ru/man3/*
 %lang(ru) %{_mandir}/ru/man5/*
 %lang(ru) %{_mandir}/ru/man8/*
+
+%files devel
+%defattr(644,root,root,755)
+%{_includedir}/anyfs-tools
+%endif
 
 %if %{with kernel}
 %files -n kernel%{_alt_kernel}-misc-any
@@ -193,7 +211,3 @@ rm -rf $RPM_BUILD_ROOT
 /etc/modprobe.d/%{_kernel_ver}/any.conf
 /lib/modules/%{_kernel_ver}/kernel/fs/any-current.ko*
 %endif
-
-%files devel
-%defattr(644,root,root,755)
-%{_includedir}/anyfs-tools
