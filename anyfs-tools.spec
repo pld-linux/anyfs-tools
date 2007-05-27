@@ -120,18 +120,18 @@ Header files for anyfs-tools.
 Pliki nagłówkowe anyfs-tools.
 
 %package -n kernel%{_alt_kernel}-misc-any
-Summary:        AnyFS Linux kernel module
-Summary(pl.UTF-8):      Moduł jądra Linuksa AnyFS
-Release:        %{_rel}@%{_kernel_ver_str}
-License:        GPL v2
-Group:          Base/Kernel
-Requires(post,postun):  /sbin/depmod
+Summary:	AnyFS Linux kernel module
+Summary(pl.UTF-8):	Moduł jądra Linuksa AnyFS
+Release:	%{_rel}@%{_kernel_ver_str}
+License:	GPL v2
+Group:		Base/Kernel
+Requires(post,postun):	/sbin/depmod
 %if %{with dist_kernel}
 %requires_releq_kernel
-Requires(postun):       %releq_kernel
+Requires(postun):	%releq_kernel
 %endif
 %if "%{_alt_kernel}" != "%{nil}"
-Provides:       kernel-misc-any
+Provides:	kernel-misc-any
 %endif
 
 %description -n kernel%{_alt_kernel}-misc-any
