@@ -1,6 +1,5 @@
 #
 # TODO:
-# - fix make anyfs_module
 # - make subpackage for libany.a ( -libany or just -static)
 
 #
@@ -9,27 +8,29 @@
 %bcond_without	kernel		# don't build 'any' kernel module
 %bcond_without	userspace	# don't build userspace utilities
 #
+%define		_rel	1
 Summary:	anyfs-tools - a unix-like toolset for recovering and converting filesystems
 Summary(pl.UTF-8):	anyfs-tools - uniksowy zestaw narzędzi do odzyskiwania i konwersji systemów plików
 Name:		anyfs-tools
-Version:	0.84.11
-Release:	1
+Version:	0.84.12
+Release:	%{_rel}
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/anyfs-tools/%{name}-%{version}.tar.bz2
-# Source0-md5:	c5d13e636b0097386f5aebf4c445d627
+# Source0-md5:	548126cb199da13c632805ef3fcca26c
 Patch0:		%{name}-DFL_RTEXTSIZE.patch
-Patch1:		%{name}-blksize.patch
 URL:		http://anyfs-tools.sourceforge.net/
-BuildRequires:	e2fsprogs-devel >= 1.38
+%{?with_userspace:BuildRequires:	e2fsprogs-devel >= 1.38}
 %if %{with kernel}
 %{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.20.2}
 BuildRequires:	rpmbuild(macros) >= 1.379
 %endif
+%if %{with userspace}
 BuildRequires:	libfuse-devel >= 2.5
 BuildRequires:	mjpegtools-devel
 BuildRequires:	mpeg2dec-devel
 BuildRequires:	xfsprogs-devel >= 2.8.11
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -143,7 +144,6 @@ Ten pakiet zawiera moduł jądra Linuksa AnyFS.
 %prep
 %setup -q
 %patch0 -p0
-%patch1 -p0
 
 %if %{with kernel}
 cat > anyfs/Makefile <<'EOF'
@@ -169,13 +169,13 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with userspace}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%find_lang %{name}
 %endif
 
 %if %{with kernel}
 %install_kernel_modules -m anyfs/any -d kernel/fs -n any -s current
 %endif
-
-%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
