@@ -1,8 +1,4 @@
 #
-# TODO:
-# - make subpackage for libany.a ( -libany or just -static)
-
-#
 # Conditional build:
 %bcond_without	dist_kernel	# allow non-distribution kernel
 %bcond_without	kernel		# don't build 'any' kernel module
@@ -26,9 +22,10 @@ URL:		http://anyfs-tools.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.379
 %endif
 %if %{with userspace}
+BuildRequires:	bzip2-devel
 BuildRequires:	libfuse-devel >= 2.5
-BuildRequires:	mjpegtools-devel
 BuildRequires:	mpeg2dec-devel
+BuildRequires:	pkgconfig
 BuildRequires:	xfsprogs-devel >= 2.8.11
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -170,6 +167,10 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%if "%{_lib}" != "lib"
+mv -f $RPM_BUILD_ROOT%{_prefix}/lib $RPM_BUILD_ROOT%{_libdir}
+%endif
+
 %find_lang %{name}
 %endif
 
@@ -191,18 +192,19 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README THANKS
 %lang(ru) %doc README.ru
-%attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_bindir}/anyfuse
-%{_mandir}/man3/*
+%attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man5/*
 %{_mandir}/man8/*
-%lang(ru) %{_mandir}/ru/man3/*
 %lang(ru) %{_mandir}/ru/man5/*
 %lang(ru) %{_mandir}/ru/man8/*
 
 %files devel
 %defattr(644,root,root,755)
+%{_libdir}/libany.a
 %{_includedir}/anyfs-tools
+%{_mandir}/man3/*
+%lang(ru) %{_mandir}/ru/man3/*
 %endif
 
 %if %{with kernel}
